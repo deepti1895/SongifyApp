@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Song App</title>
+    <link rel="stylesheet" type="text/css" href="font-awesome.css">
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+
+
+    <div class="wrapper">
+        <section class="welcome-screen">
+            <h1> Welcome to Songify </h1>
+            <h3> Enter name to access your account </h3>
+            <div class="input-wrapper">
+                <input type="text" placeholder="Name" id="name-input">
+                <button> Go </button>
+            </div>
+        </section>
+        <div class="main hidden">
+            <header>
+                <div class="right floated user-name"> </div>
+            </header>
+
+            <section class="content">
+
+
+
+
+                <div class="list-headers">
+
+
+
+</div>
+
+
+        <div class="song-list">
+          <table id=tableone>
+            <thead>
+           <td>Title</td>
+           <td>Artist</td>
+           <td>Album</td>
+           <td>Duration</td>
+         </thead>
+         <tr id='song1'>
+           <td class="song-name"></td>
+           <td class="song-artist"></td>
+           <td class="song-album"></td>
+           <td class="song-length"></td>
+         </tr>
+         <tr id='song2'>
+           <td class="song-name"></td>
+           <td class="song-artist"></td>
+           <td class="song-album"></td>
+           <td class="song-length"></td>
+         </tr>
+         <tr id='song3'>
+           <td class="song-name"></td>
+           <td class="song-artist"></td>
+           <td class="song-album"></td>
+           <td class="song-length"></td>
+         </tr>
+         <tr id='song4'>
+           <td class="song-name"></td>
+           <td class="song-artist"></td>
+           <td class="song-album"></td>
+           <td class="song-length"></td>
+         </tr>
+        </table>
+
+
+
+        </div>
+        <div class="current-song-wrapper">
+    	<img class="current-song-image" style="float:left">
+      <div class="w3-content w3-section" style="max-width:500px;float:right;">
+        <img class="mySlides" src="image1.jpg" style="width:100%">
+        <img class="mySlides" src="image2.jpg" style="width:100%">
+        <img class="mySlides" src="image4.jpg" style="width:100%">
+
+      </div>
+    	<div>
+        	<p class="current-song-name"></p>
+        	<p class="current-song-album"></p>
+    	</div>
+	</div>
+
+
+            <p class="duration"></p>
+            <p class="current-time"></p>
+
+            <button class="duration-button">Show Duration</button>
+            <button class="current-time-button">Show Current Time</button>
+            <audio src="song.mp3"  ></audio>
+
+    </section>
+
+            <footer>
+                <div class="controls">
+                    <div class="player-buttons">
+                        <i class="fa fa-play clickable play-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="progress-wrapper">
+                        <span class="time-elapsed"> </span>
+                        <div class="player-progress">
+
+                            <div class="progress-filled"> </div>
+                        </div>
+                        <span class="song-duration"></span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+    <script src="jquery.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"> </script>
+
+   <script>
+	var songs = [
+	{
+        'name': 'Badri Ki Dulhania (Title Track)',
+        'artist': 'Neha Kakkar, Monali Thakur, Ikka Singh, Dev Negi',
+        'album': 'Badrinath ki Dulhania',
+        'duration': '2:56',
+       'fileName': 'song1.mp3',
+       'image': 'image1.jpg'
+    },
+    {
+        'name': 'Humma Song',
+        'artist': 'Badshah, Jubin Nautiyal, Shashaa Tirupati',
+        'album': 'Ok Jaanu',
+        'duration': '3:15',
+        'fileName': 'song2.mp3',
+        'image': 'image2.jpg'
+    },
+    {
+        'name': 'Nashe Si Chadh Gayi',
+        'artist': 'Arijit Singh',
+        'album': 'Befikre',
+        'duration': '2:34',
+        'fileName': 'song3.mp3',
+        'image': 'image3.jpg'
+    },
+    {
+        'name': 'The Breakup Song',
+        'artist': 'Nakash Aziz, Arijit Singh, Badshah, Jonita Gandhi',
+        'album': 'Ae Dil Hai Mushkil',
+        'duration': '2:29',
+        'fileName': 'song4.mp3',
+        'image': 'image4.jpg'
+    }
+    ]
+
+var myIndex = 0;
+ carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++){
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 2000); // Change image every 2 seconds
+
+    $(document).ready(function(){
+
+          $(".w3-content w3-section").fadeToggle("slow");
+          // $(".w3-content w3-section").fadeToggle("slow");
+          // $(".w3-content w3-section").fadeToggle(3000);
+      });
+
+}
+
+
+
+        function songTime(){
+         var song = $('audio');
+         var songDuration = song.duration;
+           $('song-length').text($('audio'[0].cuurentTime));
+     }
+
+
+     function changeCurrentSongDetails(songObj) {
+        var songPath =  songObj.image;
+          $('.current-song-image').attr('src', songPath)
+          $('.current-song-name').text(songObj.name)
+          $('.current-song-album').text(songObj.album)
+      }
+      function addSongNameClickEvent(songObj, id) {
+  		var id = '#song' + id;
+
+  		$(id).on('click', function(event){
+
+  			var song = document.querySelector('audio');
+  			var currentSong = song.src;
+        console.log(currentSong);
+        console.log(songObj.fileName);
+  			if (currentSong.search(songObj.fileName) != -1) {
+  				toggleSong();
+  			} else {
+          changeCurrentSongDetails(songObj);
+  				song.src = songObj.fileName;
+  				song.play();
+
+  			}
+  		});
+  	}
+
+    function fancyTimeFormat(time)
+    {
+        // Hours, minutes and seconds
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = time % 60;
+
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        var ret = "";
+
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        return ret;
+    }
+
+     window.onload = function (){
+
+       carousel();
+	 	for(var i = 0; i < songs.length; i++) {
+	        var obj = songs[i];
+	        var name = '#song' + (i+1);
+	        var song = $(name);
+	        song.find('.song-name').text(obj.name);
+	        song.find('.song-artist').text(obj.artist);
+	        song.find('.song-album').text(obj.album);
+	        song.find('.song-length').text(obj.duration);
+	        addSongNameClickEvent(obj, i + 1);
+          var songPath =  songs[0].image;
+            $('.current-song-image').attr('src', songPath)
+            $('.current-song-name').text(songs[0].name)
+            $('.current-song-album').text(songs[0].album)
+  	}
+
+      setInterval(function(){
+        var song =$('audio')[0];
+        var currenttime = song.currentTime;
+        currenttime = fancyTimeFormat(currenttime)
+        $('.current-time').text(currenttime)
+       ,1000});
+
+      $('#tableone').DataTable({
+    		paging: false
+    	});
+	}
+
+    $('.welcome-screen button').on('click', function() {
+        var name = $('#name-input').val();
+        if (name.length > 3) {
+            var message = "Welcome, " + name;
+            $('.main .user-name').text(message);
+            $('.welcome-screen').addClass('hidden');
+            $('.main').removeClass('hidden');
+        } else {
+            $('#name-input').addClass('error');
+        }
+    });
+//        Function for song toggle
+    function toggleSong(){
+        var song = document.querySelector('audio');
+        if (song.paused == true) {
+            console.log('Playing');
+            $('.play-icon').removeClass('fa-play').addClass('fa-pause');
+            song.play();
+        } else {
+            console.log('Pausing');
+            $('.play-icon').removeClass('fa-pause').addClass('fa-play');
+            song.pause();
+        }
+    }
+
+
+//        On click icon toggle
+    $('.play-icon').on('click', function() {
+        toggleSong();
+             });
+//        on click spacebar toggle
+    $('body').on('keypress', function(event) {
+                if (event.keyCode == 32) {
+                toggleSong();
+                }
+            });
+//        duration of the song
+
+    $('.play-icon').on('click', function() {
+        songTime();
+
+             });
+    $('body').on('keypress',function(event){
+        if(event.keyCode == 32){
+            songTime();
+        }
+    });
+
+  $('.duration-button').on('click',function(){
+    var song =$('audio')[0];
+    var songDuration = (song.duration);
+    $('.duration').text(songDuration)
+  });
+
+  $('.current-time-button').on('click',function(){
+    var song =$('audio')[0];
+    var currenttime = (song.currentTime);
+    $('.current-time').text(currenttime)
+  });
+
+
+
+
+  </script>
+</body>`
+
+</html>
